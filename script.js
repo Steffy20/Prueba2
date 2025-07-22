@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const nombre = document.getElementById('nombre');
+    const apellido = document.getElementById('apellido');
     const email = document.getElementById('email');
     const direccion = document.getElementById('direccion');
     const telefono = document.getElementById('telefono');
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Validación en tiempo real
     nombre.addEventListener('input', validarNombre);
+    apellido.addEventListener('input', validarApellido);
     email.addEventListener('input', validarEmail);
     direccion.addEventListener('input', validarDireccion);
     telefono.addEventListener('input', validarTelefono);
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             datosUsuario.innerHTML = `
                 <h3>Datos Registrados:</h3>
                 <p>Nombre: ${nombre.value}</p>
+                <p>Apellido: ${apellido.value}</p>
                 <p>Email: ${email.value}</p>
                 <p>Direccion: ${direccion.value}</p>
                 <p>Telefono: ${telefono.value}</p>
@@ -31,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     btnLimpiar.addEventListener('click', () => {
-        nombre.value = email.value = direccion.value = telefono.value = password.value = confirmar.value = '';
+        nombre.value = apellido.value = email.value = direccion.value = telefono.value = password.value = confirmar.value = '';
         datosUsuario.innerHTML = '';
         document.querySelectorAll('.mensaje-error').forEach(el => el.textContent = '');
         resetearEstilos();
@@ -50,6 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return true;
         }
     }
+    function validarApellido() {
+        const error = document.getElementById('errorApellido');
+        if (apellido.value.trim() === '') {
+            error.textContent = 'El apellido es obligatorio.';
+            apellido.classList.add('invalido');
+            return false;
+        } else {
+            error.textContent = '';
+            apellido.classList.remove('invalido');
+            apellido.classList.add('valido');
+            return true;
+        }
+    }
+
 
     function validarEmail() {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -125,11 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function validarFormulario() {
-        return validarNombre() && validarEmail() && validarDireccion() && validarTelefono() && validarPassword() && validarConfirmar();
+        return validarNombre() && validarApellido() && validarEmail() && validarDireccion() && validarTelefono() && validarPassword() && validarConfirmar();
     }
 
     function resetearEstilos() {
-        [nombre, email, direccion, telefono, password, confirmar].forEach(input => {
+        [nombre, apellido, email, direccion, telefono, password, confirmar].forEach(input => {
             input.classList.remove('valido', 'invalido');
         });
     }
